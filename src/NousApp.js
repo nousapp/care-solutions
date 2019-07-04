@@ -11,31 +11,75 @@ class NousApp extends React.Component {
 
     this.state = {
       databaseId: '5bbbc5072e22d711eed8ee52',
+      sessionToken: '',
+      loggedIn: false,
+      residents: [],
+      transactions: [],
     };
   }
 
-  handleLogin = credentials => {
-    // Make axios call to server to authenticate.
-    console.log(credentials);
-    API.post('login/', {
-      username: credentials.username,
-      password: credentials.password,
-    },
-    {
-      headers: {
-        'X-Appery-Database-Id': this.state.databaseId,
-      }
+  handleLogin = async credentials => {
+    // Login Request
+    await API.post('login/', {
+        username: credentials.username,
+        password: credentials.password,
+      },
+      {
+        headers: {
+          'X-Appery-Database-Id': this.state.databaseId,
+        }
     })
-      .then(response => {
-        console.log(response);
+    .then(response => {
+      console.log('This is Login');
+      console.log(response);
+      // Sets session token
+      this.setState({ 
+        sessionToken: response.data.sessionToken,
+        loggedIn: true,
+      });  
+    })
+    .catch(err => alertErrorHandler(err));
 
-        // // set user and authentication in state.
-        // this.props.handleLogin(response.data.user);
-        // // redirect User to their dashboard / home page.
-        // this.props.history.push('/dashboard');
+    if (this.state.loggedIn) {
+      // Transaction Get Request
+      API.get('collections/Transaction', {
+          headers: {
+            'X-Appery-Database-Id': this.state.databaseId,
+            'X-Appery-Session-Token': this.state.sessionToken,
+          }
+      })
+      .then(response => {
+        console.log('This is Transaction');
+        console.log(response);
+        // Sets current transactions
+        this.setState({ 
+          transactions: response.data,
+        });  
       })
       .catch(err => alertErrorHandler(err));
+  
+      // Resident Get Request
+      API.get('collections/Resident', {
+        headers: {
+          'X-Appery-Database-Id': this.state.databaseId,
+          'X-Appery-Session-Token': this.state.sessionToken,
+        }
+      })
+      .then(response => {
+        console.log('This is Resident');
+        console.log(response);
+        // Sets residents
+        this.setState({ 
+          residents: response.data,
+        });  
+      })
+      .catch(err => alertErrorHandler(err));
+    }    
   };
+
+  handleGetData = () => {
+    console.log(this.state.sessionToken);
+  }
 
   render() {
     return (
@@ -46,8 +90,10 @@ class NousApp extends React.Component {
             Lets get that data!
           </p>
         </header>
-        <LoginForm handleLogin={this.handleLogin}/>
-        <button type="button" className="firstButton" >
+        {this.state.loggedIn ? null : (
+          <LoginForm handleLogin={this.handleLogin}/>
+        )}
+        <button type="button" className="firstButton" onClick={this.handleGetData}>
             click here!
           </button>
 
