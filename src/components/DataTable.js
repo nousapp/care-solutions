@@ -36,8 +36,8 @@ class DataTable extends React.Component {
     const { products } = this.props;
 
     return (
-      <div className="DataTable1">
-        <BootstrapTable keyField='id' className="DataTable" data={ products } columns={ this.state.columns } />
+      <div className="DataTable">
+        <BootstrapTable keyField='id' data={ products } columns={ this.state.columns } />
       </div>
     );
   }

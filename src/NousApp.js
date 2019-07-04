@@ -114,8 +114,8 @@ class NousApp extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+        <header className="appHeader">
+          <img src={logo} className="appLogo" alt="logo" />
           <p>
             Lets get that data!
           </p>
@@ -125,9 +125,7 @@ class NousApp extends React.Component {
         )}
         {this.state.showTable ? (
           <div>
-            {/* <button type="button" className="firstButton" onClick={this.handlePopulateData}>
-              click here to Populate the table!
-            </button> */}
+            <p className="tableHeader">Transactions</p>
             <DataTable products={this.state.tableData}/>
           </div>
         ) : null}

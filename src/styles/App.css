@@ -2,13 +2,13 @@
   text-align: center;
 }
 
-.App-logo {
+.appLogo {
   animation: App-logo-spin infinite 20s linear;
   height: 5rem;
   pointer-events: none;
 }
 
-.App-header {
+.appHeader {
   background-color: #282c34;
   min-height: 10rem;
   display: flex;
@@ -19,9 +19,18 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.tableHeader{
+  background-color: #282c34;
+  color: white;
+  border-radius: 1rem;
+  margin-top: 3rem;
+  padding: 1.5rem;
+  font-size: 40px;
+  width: 20rem;
+  display: inline-block;
 }
+
+
 
 @keyframes App-logo-spin {
   from {
