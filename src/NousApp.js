@@ -40,6 +40,7 @@ class NousApp extends React.Component {
       this.setState({ 
         sessionToken: response.data.sessionToken,
         loggedIn: true,
+        showTable: true,
       });  
     })
     .catch(err => alertErrorHandler(err));
@@ -117,13 +118,14 @@ class NousApp extends React.Component {
         {this.state.loggedIn ? null : (
           <LoginForm handleLogin={this.handleLogin}/>
         )}
-        <button type="button" className="firstButton" onClick={this.handlePopulateData}>
-          click here!
-        </button>
-        <DataTable products={this.state.tableData}/>
-        {/* {this.state.showTable ? null : (
-          <DataTable />
-        )} */}
+        {this.state.showTable ? (
+          <div>
+            <button type="button" className="firstButton" onClick={this.handlePopulateData}>
+              click here to Populate the table!
+            </button>
+            <DataTable products={this.state.tableData}/>
+          </div>
+        ) : null}
 
       </div>
     );
