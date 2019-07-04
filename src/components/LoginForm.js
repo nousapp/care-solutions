@@ -77,7 +77,6 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
   handleLogin: PropTypes.func.isRequired,
-  handleSwitch: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

@@ -4,6 +4,8 @@ import './styles/main.css';
 import API, { alertErrorHandler } from './services/API';
 // components
 import LoginForm from './components/LoginForm';
+import DataTable from './components/DataTable';
+import { async } from 'q';
 
 class NousApp extends React.Component {
   constructor(props) {
@@ -13,8 +15,10 @@ class NousApp extends React.Component {
       databaseId: '5bbbc5072e22d711eed8ee52',
       sessionToken: '',
       loggedIn: false,
+      showTable: false,
       residents: [],
       transactions: [],
+      tableData: [],
     };
   }
 
@@ -77,8 +81,28 @@ class NousApp extends React.Component {
     }    
   };
 
-  handleGetData = () => {
-    console.log(this.state.sessionToken);
+  handlePopulateData = async() => {
+    const dataTemp = []
+    await this.state.transactions.forEach(trans => {
+      var residentName = '';
+      var residentRoom = '';
+      var indexOfName = this.state.residents.findIndex(i => i.ResidentId === trans.ResidentId);
+      if(indexOfName >= 0) {
+        residentName = this.state.residents[indexOfName].SortName;
+        residentRoom = this.state.residents[indexOfName].Room;
+      }
+      dataTemp.push( {
+        'name': residentName,
+        'serviceCode': trans.ServiceCode,
+        'serviceBy': trans.ServicedBy,
+        'id': trans.ResidentId,
+        'room': residentRoom,
+        'date': trans.TransDate,
+      });
+    });
+    this.setState({ 
+      tableData: dataTemp,
+    });  
   }
 
   render() {
@@ -93,9 +117,13 @@ class NousApp extends React.Component {
         {this.state.loggedIn ? null : (
           <LoginForm handleLogin={this.handleLogin}/>
         )}
-        <button type="button" className="firstButton" onClick={this.handleGetData}>
-            click here!
-          </button>
+        <button type="button" className="firstButton" onClick={this.handlePopulateData}>
+          click here!
+        </button>
+        <DataTable products={this.state.tableData}/>
+        {/* {this.state.showTable ? null : (
+          <DataTable />
+        )} */}
 
       </div>
     );
