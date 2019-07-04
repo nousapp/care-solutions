@@ -22,7 +22,7 @@ class NousApp extends React.Component {
     };
   }
 
-  handleLogin = async credentials => {
+  handleAPICalls = async credentials => {
     // Login Request
     await API.post('login/', {
         username: credentials.username,
@@ -47,7 +47,7 @@ class NousApp extends React.Component {
 
     if (this.state.loggedIn) {
       // Transaction Get Request
-      API.get('collections/Transaction', {
+      await API.get('collections/Transaction', {
           headers: {
             'X-Appery-Database-Id': this.state.databaseId,
             'X-Appery-Session-Token': this.state.sessionToken,
@@ -64,7 +64,7 @@ class NousApp extends React.Component {
       .catch(err => alertErrorHandler(err));
   
       // Resident Get Request
-      API.get('collections/Resident', {
+      await API.get('collections/Resident', {
         headers: {
           'X-Appery-Database-Id': this.state.databaseId,
           'X-Appery-Session-Token': this.state.sessionToken,
@@ -106,6 +106,11 @@ class NousApp extends React.Component {
     });  
   }
 
+  handleLogin = async(credentials) => {
+    await this.handleAPICalls(credentials);
+    this.handlePopulateData();
+  }
+
   render() {
     return (
       <div className="App">
@@ -120,9 +125,9 @@ class NousApp extends React.Component {
         )}
         {this.state.showTable ? (
           <div>
-            <button type="button" className="firstButton" onClick={this.handlePopulateData}>
+            {/* <button type="button" className="firstButton" onClick={this.handlePopulateData}>
               click here to Populate the table!
-            </button>
+            </button> */}
             <DataTable products={this.state.tableData}/>
           </div>
         ) : null}
