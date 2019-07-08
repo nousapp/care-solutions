@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {Button} from 'primereact/button';
@@ -21,9 +22,17 @@ class PrimeDataTable extends React.Component {
   }
 
   render() {
-    const { products } = this.props;
+    const { products, loading } = this.props;
     // Export To CSV
     var header = <div style={{textAlign:'left'}}><Button type="button" icon="pi pi-external-link" iconPos="left" label="CSV" onClick={this.export}></Button></div>;
+
+    if (loading) {
+      return (
+        <div className="loaderWrapper">
+          <Loader type="Triangle" color="#61dbfb" height="30vh" width="100%" />
+        </div>
+      );
+    }
 
     return (
       <DataTable value={products} paginator={true} rows={10} rowsPerPageOptions={[5,10,20]} header={header} ref={(el) => { this.dt = el; }}>
@@ -40,6 +49,7 @@ class PrimeDataTable extends React.Component {
 
 PrimeDataTable.propTypes = {
   products: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default PrimeDataTable;

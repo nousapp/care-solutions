@@ -14,6 +14,7 @@ class NousApp extends React.Component {
     this.state = {
       databaseId: '5bbbc5072e22d711eed8ee52',
       sessionToken: '',
+      loading: false,
       loggedIn: false,
       showTable: false,
       residents: [],
@@ -37,6 +38,7 @@ class NousApp extends React.Component {
       // Sets session token
       this.setState({ 
         sessionToken: response.data.sessionToken,
+        loading: true,
         loggedIn: true,
         showTable: true,
       });  
@@ -100,6 +102,7 @@ class NousApp extends React.Component {
     });
     this.setState({ 
       tableData: dataTemp,
+      loading: false,
     });  
   }
 
@@ -123,7 +126,7 @@ class NousApp extends React.Component {
         {this.state.showTable ? (
           <div>
             <p className="tableHeader">Transactions</p>
-            <PrimeDataTable products={this.state.tableData}/>
+            <PrimeDataTable loading={this.state.loading} products={this.state.tableData}/>
           </div>
         ) : null}
 
