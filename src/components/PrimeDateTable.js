@@ -26,16 +26,15 @@ class PrimeDataTable extends React.Component {
     var header = <div style={{textAlign:'left'}}><Button type="button" icon="pi pi-external-link" iconPos="left" label="CSV" onClick={this.export}></Button></div>;
     // Pagination
     let paginatorLeft = <Button icon="pi pi-refresh"/>;
-    let paginatorRight = <Button icon="pi pi-cloud-upload"/>;
 
     return (
-      <DataTable value={products} paginator={true} paginatorLeft={paginatorLeft} paginatorRight={paginatorRight} rows={10} rowsPerPageOptions={[5,10,20]} header={header} ref={(el) => { this.dt = el; }}>
-          <Column field="name" header="Name" />
-          <Column field="serviceCode" header="Service Code" />
-          <Column field="serviceBy" header="Serviced By" />
-          <Column field="id" header="Resident ID" />
-          <Column field="room" header="Room #" />
-          <Column field="date" header="Date" sortable={true}/>
+      <DataTable value={products} paginator={true} paginatorLeft={paginatorLeft} rows={10} rowsPerPageOptions={[5,10,20]} header={header} ref={(el) => { this.dt = el; }}>
+          <Column field="name" header="Name" filter={true} sortable={true} />
+          <Column field="serviceCode" header="Service Code" filter={true} sortable={true} />
+          <Column field="serviceBy" header="Serviced By" filter={true} sortable={true} />
+          <Column field="id" header="Resident ID" filter={true} sortable={true} />
+          <Column field="room" header="Room #" filter={true} sortable={true} />
+          <Column field="date" header="Date" filter={true} sortable={true}/>
       </DataTable>
     );
   }
