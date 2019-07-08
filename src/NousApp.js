@@ -34,8 +34,6 @@ class NousApp extends React.Component {
         }
     })
     .then(response => {
-      console.log('This is Login');
-      console.log(response);
       // Sets session token
       this.setState({ 
         sessionToken: response.data.sessionToken,
@@ -57,8 +55,6 @@ class NousApp extends React.Component {
           }
       })
       .then(response => {
-        console.log('This is Transaction');
-        console.log(response);
         // Sets current transactions
         this.setState({ 
           transactions: response.data,
@@ -74,8 +70,6 @@ class NousApp extends React.Component {
         }
       })
       .then(response => {
-        console.log('This is Resident');
-        console.log(response);
         // Sets residents
         this.setState({ 
           residents: response.data,

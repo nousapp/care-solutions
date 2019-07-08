@@ -24,11 +24,9 @@ class PrimeDataTable extends React.Component {
     const { products } = this.props;
     // Export To CSV
     var header = <div style={{textAlign:'left'}}><Button type="button" icon="pi pi-external-link" iconPos="left" label="CSV" onClick={this.export}></Button></div>;
-    // Pagination
-    let paginatorLeft = <Button icon="pi pi-refresh"/>;
 
     return (
-      <DataTable value={products} paginator={true} paginatorLeft={paginatorLeft} rows={10} rowsPerPageOptions={[5,10,20]} header={header} ref={(el) => { this.dt = el; }}>
+      <DataTable value={products} paginator={true} rows={10} rowsPerPageOptions={[5,10,20]} header={header} ref={(el) => { this.dt = el; }}>
           <Column field="name" header="Name" filter={true} sortable={true} />
           <Column field="serviceCode" header="Service Code" filter={true} sortable={true} />
           <Column field="serviceBy" header="Serviced By" filter={true} sortable={true} />
