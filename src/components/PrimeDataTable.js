@@ -22,9 +22,12 @@ class PrimeDataTable extends React.Component {
   }
 
   render() {
-    const { products, loading } = this.props;
+    const { products, loading, onRefresh } = this.props;
     // Export To CSV
     var header = <div style={{textAlign:'left'}}><Button type="button" icon="pi pi-external-link" iconPos="left" label="CSV" onClick={this.export}></Button></div>;
+    // Paginator button
+    let paginatorLeft = <Button icon="pi pi-refresh" 
+    onClick={() => onRefresh()}/>;
 
     if (loading) {
       return (
@@ -35,7 +38,7 @@ class PrimeDataTable extends React.Component {
     }
 
     return (
-      <DataTable value={products} paginator={true} rows={10} rowsPerPageOptions={[5,10,20]} header={header} ref={(el) => { this.dt = el; }}>
+      <DataTable value={products} paginator={true} paginatorLeft={paginatorLeft} rows={10} rowsPerPageOptions={[5,10,20]} header={header} ref={(el) => { this.dt = el; }}>
           <Column field="name" header="Name" filter={true} sortable={true} />
           <Column field="serviceCode" header="Service Code" filter={true} sortable={true} />
           <Column field="serviceBy" header="Serviced By" filter={true} sortable={true} />
@@ -50,6 +53,7 @@ class PrimeDataTable extends React.Component {
 PrimeDataTable.propTypes = {
   products: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  onRefresh: PropTypes.func.isRequired,
 };
 
 export default PrimeDataTable;

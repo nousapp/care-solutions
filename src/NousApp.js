@@ -5,7 +5,7 @@ import API, { alertErrorHandler } from './services/API';
 // components
 import LoginForm from './components/LoginForm';
 // import DataTable from './components/DataTable';
-import PrimeDataTable from './components/PrimeDateTable';
+import PrimeDataTable from './components/PrimeDataTable';
 
 class NousApp extends React.Component {
   constructor(props) {
@@ -111,6 +111,32 @@ class NousApp extends React.Component {
     this.handlePopulateData();
   }
 
+  handleRefresh = async() => {
+    this.setState({ 
+      loading: true,
+    });  
+    if (this.state.loggedIn) {
+      // Transaction Get Request
+      await API.get('collections/Transaction', {
+          params: {
+            'limit': 1500,
+          },
+          headers: {
+            'X-Appery-Database-Id': this.state.databaseId,
+            'X-Appery-Session-Token': this.state.sessionToken,
+          }
+      })
+      .then(response => {
+        // Sets current transactions
+        this.setState({ 
+          transactions: response.data,
+        });  
+      })
+      .catch(err => alertErrorHandler(err));
+    }   
+    this.handlePopulateData();
+  }
+
   render() {
     return (
       <div className="App">
@@ -126,7 +152,7 @@ class NousApp extends React.Component {
         {this.state.showTable ? (
           <div>
             <p className="tableHeader">Transactions</p>
-            <PrimeDataTable loading={this.state.loading} products={this.state.tableData}/>
+            <PrimeDataTable loading={this.state.loading} products={this.state.tableData} onRefresh={this.handleRefresh} />
           </div>
         ) : null}
 
