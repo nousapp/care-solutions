@@ -8,6 +8,7 @@ import {Button} from 'primereact/button';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import '../styles/DataTable.css';
 
 class PrimeDataTable extends React.Component {
   constructor(props) {
