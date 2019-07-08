@@ -4,8 +4,8 @@ import './styles/main.css';
 import API, { alertErrorHandler } from './services/API';
 // components
 import LoginForm from './components/LoginForm';
-import DataTable from './components/DataTable';
-import { async } from 'q';
+// import DataTable from './components/DataTable';
+import PrimeDataTable from './components/PrimeDataTable';
 
 class NousApp extends React.Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class NousApp extends React.Component {
     this.state = {
       databaseId: '5bbbc5072e22d711eed8ee52',
       sessionToken: '',
+      loading: false,
       loggedIn: false,
       showTable: false,
       residents: [],
@@ -34,11 +35,10 @@ class NousApp extends React.Component {
         }
     })
     .then(response => {
-      console.log('This is Login');
-      console.log(response);
       // Sets session token
       this.setState({ 
         sessionToken: response.data.sessionToken,
+        loading: true,
         loggedIn: true,
         showTable: true,
       });  
@@ -48,14 +48,15 @@ class NousApp extends React.Component {
     if (this.state.loggedIn) {
       // Transaction Get Request
       await API.get('collections/Transaction', {
+          params: {
+            'limit': 1500,
+          },
           headers: {
             'X-Appery-Database-Id': this.state.databaseId,
             'X-Appery-Session-Token': this.state.sessionToken,
           }
       })
       .then(response => {
-        console.log('This is Transaction');
-        console.log(response);
         // Sets current transactions
         this.setState({ 
           transactions: response.data,
@@ -71,8 +72,6 @@ class NousApp extends React.Component {
         }
       })
       .then(response => {
-        console.log('This is Resident');
-        console.log(response);
         // Sets residents
         this.setState({ 
           residents: response.data,
@@ -103,11 +102,38 @@ class NousApp extends React.Component {
     });
     this.setState({ 
       tableData: dataTemp,
+      loading: false,
     });  
   }
 
   handleLogin = async(credentials) => {
     await this.handleAPICalls(credentials);
+    this.handlePopulateData();
+  }
+
+  handleRefresh = async() => {
+    this.setState({ 
+      loading: true,
+    });  
+    if (this.state.loggedIn) {
+      // Transaction Get Request
+      await API.get('collections/Transaction', {
+          params: {
+            'limit': 1500,
+          },
+          headers: {
+            'X-Appery-Database-Id': this.state.databaseId,
+            'X-Appery-Session-Token': this.state.sessionToken,
+          }
+      })
+      .then(response => {
+        // Sets current transactions
+        this.setState({ 
+          transactions: response.data,
+        });  
+      })
+      .catch(err => alertErrorHandler(err));
+    }   
     this.handlePopulateData();
   }
 
@@ -126,7 +152,7 @@ class NousApp extends React.Component {
         {this.state.showTable ? (
           <div>
             <p className="tableHeader">Transactions</p>
-            <DataTable products={this.state.tableData}/>
+            <PrimeDataTable loading={this.state.loading} products={this.state.tableData} onRefresh={this.handleRefresh} />
           </div>
         ) : null}
 
