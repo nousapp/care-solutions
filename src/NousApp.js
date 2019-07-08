@@ -4,8 +4,8 @@ import './styles/main.css';
 import API, { alertErrorHandler } from './services/API';
 // components
 import LoginForm from './components/LoginForm';
-import DataTable from './components/DataTable';
-import { async } from 'q';
+// import DataTable from './components/DataTable';
+import PrimeDataTable from './components/PrimeDateTable';
 
 class NousApp extends React.Component {
   constructor(props) {
@@ -48,6 +48,9 @@ class NousApp extends React.Component {
     if (this.state.loggedIn) {
       // Transaction Get Request
       await API.get('collections/Transaction', {
+          params: {
+            'limit': 1500,
+          },
           headers: {
             'X-Appery-Database-Id': this.state.databaseId,
             'X-Appery-Session-Token': this.state.sessionToken,
@@ -126,7 +129,7 @@ class NousApp extends React.Component {
         {this.state.showTable ? (
           <div>
             <p className="tableHeader">Transactions</p>
-            <DataTable products={this.state.tableData}/>
+            <PrimeDataTable products={this.state.tableData}/>
           </div>
         ) : null}
 
