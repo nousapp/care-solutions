@@ -50,6 +50,7 @@ class NousApp extends React.Component {
       await API.get('collections/Transaction', {
           params: {
             'limit': 1500,
+            'skip': 750,
           },
           headers: {
             'X-Appery-Database-Id': this.state.databaseId,
@@ -143,7 +144,7 @@ class NousApp extends React.Component {
         <header className="appHeader">
           <img src={logo} className="appLogo" alt="logo" />
           <p>
-            Lets get that data!
+            Care Solutions
           </p>
         </header>
         {this.state.loggedIn ? null : (
