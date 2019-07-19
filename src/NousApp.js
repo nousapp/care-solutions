@@ -50,7 +50,7 @@ class NousApp extends React.Component {
       await API.get('collections/Transaction', {
           params: {
             'limit': 1500,
-            'skip': 750,
+            'sort': '-TransDate',
           },
           headers: {
             'X-Appery-Database-Id': this.state.databaseId,
@@ -121,6 +121,7 @@ class NousApp extends React.Component {
       await API.get('collections/Transaction', {
           params: {
             'limit': 1500,
+            'sort': '-TransDate',
           },
           headers: {
             'X-Appery-Database-Id': this.state.databaseId,

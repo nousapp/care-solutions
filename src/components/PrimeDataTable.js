@@ -48,7 +48,7 @@ class PrimeDataTable extends React.Component {
     }
 
     return (
-      <DataTable value={products} paginator={true} paginatorLeft={paginatorLeft} rows={10} rowsPerPageOptions={[5,10,20]} header={header} ref={(el) => { this.dt = el; }} globalFilter={this.state.globalFilter} emptyMessage="No records found" sortField="date" sortOrder="-1">
+      <DataTable value={products} paginator={true} paginatorLeft={paginatorLeft} rows={10} rowsPerPageOptions={[5,10,20]} header={header} ref={(el) => { this.dt = el; }} globalFilter={this.state.globalFilter} emptyMessage="No records found">
           <Column field="name" header="Name" filter={true} sortable={true} />
           <Column field="serviceCode" header="Service Code" filter={true} sortable={true} />
           <Column field="serviceBy" header="Serviced By" filter={true} sortable={true} />
