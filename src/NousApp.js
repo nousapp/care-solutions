@@ -19,6 +19,7 @@ class NousApp extends React.Component {
       showTable: false,
       residents: [],
       transactions: [],
+      users: [],
       tableData: [],
     };
   }
@@ -79,6 +80,21 @@ class NousApp extends React.Component {
         });  
       })
       .catch(err => alertErrorHandler(err));
+
+      // Users Get Request
+      await API.get('users', {
+        headers: {
+          'X-Appery-Database-Id': this.state.databaseId,
+          'X-Appery-Session-Token': this.state.sessionToken,
+        }
+      })
+      .then(response => {
+        // Sets users
+        this.setState({ 
+          users: response.data,
+        });  
+      })
+      .catch(err => alertErrorHandler(err));
     }    
   };
 
@@ -87,15 +103,20 @@ class NousApp extends React.Component {
     await this.state.transactions.forEach(trans => {
       var residentName = '';
       var residentRoom = '';
-      var indexOfName = this.state.residents.findIndex(i => i.ResidentId === trans.ResidentId);
-      if(indexOfName >= 0) {
-        residentName = this.state.residents[indexOfName].SortName;
-        residentRoom = this.state.residents[indexOfName].Room;
+      var userName = '';
+      var indexOfResName = this.state.residents.findIndex(i => i.ResidentId === trans.ResidentId);
+      var indexOfUserName = this.state.users.findIndex(i => i.username === trans.ServicedBy);
+      if(indexOfResName >= 0) {
+        residentName = this.state.residents[indexOfResName].SortName;
+        residentRoom = this.state.residents[indexOfResName].Room;
+      }
+      if(indexOfUserName >= 0) {
+        userName = this.state.users[indexOfUserName].SortName || trans.ServicedBy;
       }
       dataTemp.push( {
         'name': residentName,
         'serviceCode': trans.ServiceCode,
-        'serviceBy': trans.ServicedBy,
+        'serviceBy': userName || trans.ServicedBy,
         'id': trans.ResidentId,
         'room': residentRoom,
         'date': trans.TransDate,
