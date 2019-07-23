@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './pics/CrownTransparent.png';
 import './styles/main.css';
 import API, { alertErrorHandler } from './services/API';
 // components
@@ -165,9 +165,8 @@ class NousApp extends React.Component {
       <div className="App">
         <header className="appHeader">
           <img src={logo} className="appLogo" alt="logo" />
-          <p>
-            Care Solutions
-          </p>
+          <p className="subHeader">Royal Bellingham's</p>
+          <p className="headerTitle">Care Solutions</p>
         </header>
         {this.state.loggedIn ? null : (
           <LoginForm handleLogin={this.handleLogin}/>
@@ -175,7 +174,9 @@ class NousApp extends React.Component {
         {this.state.showTable ? (
           <div>
             <p className="tableHeader">Transactions</p>
-            <PrimeDataTable loading={this.state.loading} products={this.state.tableData} onRefresh={this.handleRefresh} />
+            <div className="tableBorder">
+              <PrimeDataTable loading={this.state.loading} products={this.state.tableData} onRefresh={this.handleRefresh} />
+            </div>
           </div>
         ) : null}
 

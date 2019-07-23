@@ -1,7 +1,6 @@
 .p-datatable {
   display: inline-block;
   width: 90vw;
-  margin-bottom: 3rem;
 }
 
 @media all and (min-width: 1228px) {
