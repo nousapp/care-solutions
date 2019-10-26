@@ -2,9 +2,10 @@
   display: flex;
   flex-flow: column;
   margin: 2rem auto;
-  background: #282c34;
+  background: #dddddd;
+  color: black;
   padding: 2rem;
-  border-radius: 2rem;
+  border-radius: 0.5rem;
   text-align: left;
   width: 27rem;
 }
@@ -16,13 +17,13 @@
   align-self: center;
   padding-top: 5px;
   padding-bottom: 5px;
-  background-color: cadetblue;
+  background-color: #00ad48;
   color: white;
   border: none;
 }
 
 .submitButton:hover {
-  background-color: rgb(94, 213, 218);
+  background-color: #00ca54;
   color: white;
 }
 
@@ -30,23 +31,36 @@
 .credentialTitle {
   margin-left: 0;
   margin-bottom: 0.5rem;
-  font-size: 1.9rem;
+  font-size: 1.7rem;
   font-weight: 400;
   margin-top: -1rem;
   padding: 0.5rem;
   align-self: center;
   border-style: none;
-  color: white;
+  color: black;
 }
 
-.credentialInput {
+.passwordInput, .usernameInput{
   width: 97.5%;
-  height: 2.2rem;
   margin-bottom: 0.7rem;
   margin-top: 0.3rem;
-  border-radius: 0px;
+  border-radius: 5px;
   padding-left: 0.7rem;
-  background-color: #e8e8e8;
+  background-color: #ffffff;
+}
+
+.usernameInput{
+  width: 88%;
+}
+
+.usernameIcon{
+  width: 10px;
+}
+
+
+.usernameWrap{
+  display: flex;
+  align-items: center;
 }
 
 .locationSelect{

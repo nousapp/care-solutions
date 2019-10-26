@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './pics/CrownTransparent.png';
+import logo from './pics/RoyalBelingham.jpg';
 import './styles/main.css';
 import API, { alertErrorHandler } from './services/API';
 // components
@@ -165,7 +165,6 @@ class NousApp extends React.Component {
       <div className="App">
         <header className="appHeader">
           <img src={logo} className="appLogo" alt="logo" />
-          <p className="subHeader">Royal Bellingham's</p>
           <p className="headerTitle">Care Solutions</p>
         </header>
         {this.state.loggedIn ? null : (

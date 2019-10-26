@@ -40,6 +40,7 @@ class PrimeDataTable extends React.Component {
     onClick={() => onRefresh()}/>;
 
     if (loading) {
+      console.log(loading);
       return (
         <div className="loaderWrapper">
           <Loader type="Triangle" color="#61dbfb" height="30vh" width="100%" />

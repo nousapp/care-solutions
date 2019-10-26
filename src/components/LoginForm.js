@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Grid from '@material-ui/core/Grid';
 import '../styles/LoginForm.css';
 
 class LoginForm extends Component {
@@ -32,8 +35,10 @@ class LoginForm extends Component {
   handleLogin = event => {
     event.preventDefault();
     this.props.handleLogin({
-      username: this.state.loginUsernameInputValue,
-      password: this.state.loginPasswordInputValue,
+      // username: this.state.loginUsernameInputValue,
+      // password: this.state.loginPasswordInputValue,
+      username: document.getElementById('username-input').value,
+      password: document.getElementById('password-input').value,
     });
   };
 
@@ -42,20 +47,20 @@ class LoginForm extends Component {
     return (
       <form onSubmit={this.handleLogin} className="credentialForm">
         <h1 className="credentialTitle">Welcome back!</h1>
-        <label className="" htmlFor="loginUsernameInputValue">
-          <input
-            className="credentialInput"
-            type="text"
-            id="loginUsernameInputValue"
-            autoComplete="username"
-            name="loginUsernameInputValue"
-            placeholder="Enter username"
-            value={this.state.loginUsernameInputValue}
-            onChange={this.handleInputChange}
-          />
-        </label>
+        {/* <label className="" htmlFor="loginUsernameInputValue">
+            <input
+              className="credentialInput"
+              type="text"
+              id="loginUsernameInputValue"
+              autoComplete="username"
+              name="loginUsernameInputValue"
+              placeholder="Enter username"
+              value={this.state.loginUsernameInputValue}
+              onChange={this.handleInputChange}
+            />
+        </label> */}
 
-        <label htmlFor="loginPasswordInputValue">
+        {/* <label htmlFor="loginPasswordInputValue">
           <input
             className="credentialInput"
             type="password"
@@ -66,7 +71,29 @@ class LoginForm extends Component {
             value={this.state.loginPasswordInputValue}
             onChange={this.handleInputChange}
           />
-        </label>
+        </label> */}
+        <div className="usernameWrap">
+            <AccountCircle className="usernameIcon"/>
+              <TextField
+              id="username-input"
+              label="username"
+              className="usernameInput"
+              type="username"
+              autoComplete="current-username"
+              margin="normal"
+              variant="outlined"
+            />
+        </div>
+        
+        <TextField
+          id="password-input"
+          label="password"
+          className="passwordInput"
+          type="password"
+          autoComplete="current-password"
+          margin="normal"
+          variant="outlined"
+        />
         <button className="submitButton" type="submit">
           Login
         </button>
