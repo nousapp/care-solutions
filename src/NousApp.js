@@ -25,6 +25,48 @@ class NousApp extends React.Component {
   }
 
   handleAPICalls = async credentials => {
+    // TODO: Add Login and Security
+    await this.setState({ 
+      loading: true,
+      loggedIn: true,
+      showTable: true,
+    });  
+
+    if (this.state.loggedIn) {
+      // Transaction Get Request
+      await API.get('api/transactions')
+      .then(response => {
+        // Sets current transactions
+        this.setState({ 
+          transactions: response.data,
+        });  
+      })
+      .catch(err => alertErrorHandler(err));
+  
+      // Resident Get Request
+      await API.get('api/residents')
+      .then(response => {
+        // Sets residents
+        this.setState({ 
+          residents: response.data,
+        });  
+      })
+      .catch(err => alertErrorHandler(err));
+
+      // Users Get Request
+      await API.get('api/users')
+      .then(response => {
+        // Sets users
+        this.setState({ 
+          users: response.data,
+        });  
+      })
+      .catch(err => alertErrorHandler(err));
+    }    
+  };
+
+
+  handleOldAPICalls = async credentials => {
     // Login Request
     await API.post('login/', {
         username: credentials.username,
