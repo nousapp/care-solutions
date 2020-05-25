@@ -26,19 +26,15 @@ class NousApp extends React.Component {
 
   handleAPICalls = async credentials => {
     // Login Request
-    await API.post('login/', {
+    await API.post('api/users/login', {
         username: credentials.username,
         password: credentials.password,
-      },
-      {
-        headers: {
-          'X-Appery-Database-Id': this.state.databaseId,
-        }
-    })
+      }
+    )
     .then(response => {
       // Sets session token
       this.setState({ 
-        sessionToken: response.data.sessionToken,
+        sessionToken: response.data,
         loading: true,
         loggedIn: true,
         showTable: true,
@@ -48,14 +44,9 @@ class NousApp extends React.Component {
 
     if (this.state.loggedIn) {
       // Transaction Get Request
-      await API.get('collections/Transaction', {
-          params: {
-            'limit': 1500,
-            'sort': '-TransDate',
-          },
+      await API.get('api/transactions', {
           headers: {
-            'X-Appery-Database-Id': this.state.databaseId,
-            'X-Appery-Session-Token': this.state.sessionToken,
+            'x-access-token': this.state.sessionToken,
           }
       })
       .then(response => {
@@ -67,10 +58,9 @@ class NousApp extends React.Component {
       .catch(err => alertErrorHandler(err));
   
       // Resident Get Request
-      await API.get('collections/Resident', {
+      await API.get('api/residents', {
         headers: {
-          'X-Appery-Database-Id': this.state.databaseId,
-          'X-Appery-Session-Token': this.state.sessionToken,
+          'x-access-token': this.state.sessionToken,
         }
       })
       .then(response => {
@@ -82,10 +72,9 @@ class NousApp extends React.Component {
       .catch(err => alertErrorHandler(err));
 
       // Users Get Request
-      await API.get('users', {
+      await API.get('api/users', {
         headers: {
-          'X-Appery-Database-Id': this.state.databaseId,
-          'X-Appery-Session-Token': this.state.sessionToken,
+          'x-access-token': this.state.sessionToken,
         }
       })
       .then(response => {
@@ -104,23 +93,24 @@ class NousApp extends React.Component {
       var residentName = '';
       var residentRoom = '';
       var userName = '';
-      var indexOfResName = this.state.residents.findIndex(i => i.ResidentId === trans.ResidentId);
-      var indexOfUserName = this.state.users.findIndex(i => i.username === trans.ServicedBy);
-      if(indexOfResName >= 0) {
-        residentName = this.state.residents[indexOfResName].SortName;
-        residentRoom = this.state.residents[indexOfResName].Room;
-      }
-      if(indexOfUserName >= 0) {
-        userName = this.state.users[indexOfUserName].SortName || trans.ServicedBy;
-      }
-      dataTemp.push( {
-        'name': residentName,
-        'serviceCode': trans.ServiceCode,
-        'serviceBy': userName || trans.ServicedBy,
-        'id': trans.ResidentId,
-        'room': residentRoom,
-        'date': trans.TransDate,
-      });
+      console.log(trans.resident_id);
+      // var indexOfResName = this.state.residents.findIndex(i => i.ResidentId === trans.ResidentId);
+      // var indexOfUserName = this.state.users.findIndex(i => i.username === trans.ServicedBy);
+      // if(indexOfResName >= 0) {
+      //   residentName = this.state.residents[indexOfResName].SortName;
+      //   residentRoom = this.state.residents[indexOfResName].Room;
+      // }
+      // if(indexOfUserName >= 0) {
+      //   userName = this.state.users[indexOfUserName].SortName || trans.ServicedBy;
+      // }
+      // dataTemp.push( {
+      //   'name': residentName,
+      //   'serviceCode': trans.ServiceCode,
+      //   'serviceBy': userName || trans.ServicedBy,
+      //   'id': trans.ResidentId,
+      //   'room': residentRoom,
+      //   'date': trans.TransDate,
+      // });
     });
     this.setState({ 
       tableData: dataTemp,
@@ -139,14 +129,9 @@ class NousApp extends React.Component {
     });  
     if (this.state.loggedIn) {
       // Transaction Get Request
-      await API.get('collections/Transaction', {
-          params: {
-            'limit': 1500,
-            'sort': '-TransDate',
-          },
+      await API.get('api/transactions', {
           headers: {
-            'X-Appery-Database-Id': this.state.databaseId,
-            'X-Appery-Session-Token': this.state.sessionToken,
+            'x-access-token': this.state.sessionToken,
           }
       })
       .then(response => {
