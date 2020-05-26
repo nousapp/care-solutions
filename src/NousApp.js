@@ -93,24 +93,23 @@ class NousApp extends React.Component {
       var residentName = '';
       var residentRoom = '';
       var userName = '';
-      console.log(trans.resident_id);
-      // var indexOfResName = this.state.residents.findIndex(i => i.ResidentId === trans.ResidentId);
-      // var indexOfUserName = this.state.users.findIndex(i => i.username === trans.ServicedBy);
-      // if(indexOfResName >= 0) {
-      //   residentName = this.state.residents[indexOfResName].SortName;
-      //   residentRoom = this.state.residents[indexOfResName].Room;
-      // }
-      // if(indexOfUserName >= 0) {
-      //   userName = this.state.users[indexOfUserName].SortName || trans.ServicedBy;
-      // }
-      // dataTemp.push( {
-      //   'name': residentName,
-      //   'serviceCode': trans.ServiceCode,
-      //   'serviceBy': userName || trans.ServicedBy,
-      //   'id': trans.ResidentId,
-      //   'room': residentRoom,
-      //   'date': trans.TransDate,
-      // });
+      var indexOfResName = this.state.residents.findIndex(i => i.id == trans.resident_id);
+      var indexOfUserName = this.state.users.findIndex(i => i.username == trans.username);
+      if(indexOfResName >= 0) {
+        residentName = this.state.residents[indexOfResName].sortname;
+        residentRoom = this.state.residents[indexOfResName].room;
+      }
+      if(indexOfUserName >= 0) {
+        userName = this.state.users[indexOfUserName].sortname || trans.username;
+      }
+      dataTemp.push( {
+        'name': residentName,
+        'serviceCode': trans.service_code,
+        'serviceBy': userName || trans.username,
+        'id': trans.resident_id,
+        'room': residentRoom,
+        'date': trans.trans_date,
+      });
     });
     this.setState({ 
       tableData: dataTemp,
@@ -121,6 +120,7 @@ class NousApp extends React.Component {
   handleLogin = async(credentials) => {
     await this.handleAPICalls(credentials);
     this.handlePopulateData();
+    console.log(this.state.tableData);
   }
 
   handleRefresh = async() => {
