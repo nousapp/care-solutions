@@ -1,11 +1,12 @@
 import React from 'react';
 import logo from './pics/CrownTransparent.png';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './styles/main.css';
 import API, { alertErrorHandler } from './services/API';
 // components
-import { LoginPage, Transactions, Dashboard } from './pages';
-import Header from './components/Header';
+import LoginForm from './components/LoginForm';
+// import DataTable from './components/DataTable';
+import PrimeDataTable from './components/PrimeDataTable';
+
 class NousApp extends React.Component {
   constructor(props) {
     super(props);
@@ -14,10 +15,8 @@ class NousApp extends React.Component {
       databaseId: '5bbbc5072e22d711eed8ee52',
       sessionToken: '',
       loading: false,
-      loggedIn: true,
+      loggedIn: false,
       showTable: false,
-      currentUser: '',
-      activeDashboard: 'overview',
       residents: [],
       transactions: [],
       users: [],
@@ -36,7 +35,6 @@ class NousApp extends React.Component {
       // Sets session token
       this.setState({ 
         sessionToken: response.data,
-        currentUser: credentials.username,
         loading: true,
         loggedIn: true,
         showTable: true,
@@ -121,7 +119,8 @@ class NousApp extends React.Component {
 
   handleLogin = async(credentials) => {
     await this.handleAPICalls(credentials);
-    // this.handlePopulateData();
+    this.handlePopulateData();
+    console.log(this.state.tableData);
   }
 
   handleRefresh = async() => {
@@ -146,63 +145,27 @@ class NousApp extends React.Component {
     this.handlePopulateData();
   }
 
-  goToOverview = () => {
-    this.setState({ activeDashboard: 'overview' });
-  };
-
-  goToTransactions = () => {
-    this.setState({ activeDashboard: 'transactions' });
-  };
-
-  handleLogout = () => {
-
-    this.setState({
-      sessionToken: '',
-      loading: false,
-      loggedIn: false,
-      showTable: false,
-      currentUser: '',
-      activeDashboard: 'overview',
-      residents: [],
-      transactions: [],
-      users: [],
-      tableData: [],
-    })
-  }
-s
   render() {
     return (
-      <BrowserRouter className="App">
+      <div className="App">
         <header className="appHeader">
           <img src={logo} className="appLogo" alt="logo" />
           <p className="subHeader">Royal Bellingham's</p>
           <p className="headerTitle">Care Solutions</p>
         </header>
-        <Switch>
-          <Route
-            path="/"
-            exact
-            render={props => (
-              <Dashboard
-                {...props}
-                handleLogout ={this.handleLogout}
-                loading = {this.state.loading}
-                tableData = {this.state.tableData}
-                handleRefresh = {this.handleRefresh}
-              />
-            )}
-          />
-          <Route
-            path="/transactions"
-            render={props => (
-              <Transactions
-                {...props}
-                handleLogin={this.handleLogin}
-              />
-            )}
-          />
-        </Switch>
-      </BrowserRouter>
+        {this.state.loggedIn ? null : (
+          <LoginForm handleLogin={this.handleLogin}/>
+        )}
+        {this.state.showTable ? (
+          <div>
+            <p className="tableHeader">Transactions</p>
+            <div className="tableBorder">
+              <PrimeDataTable loading={this.state.loading} products={this.state.tableData} onRefresh={this.handleRefresh} />
+            </div>
+          </div>
+        ) : null}
+
+      </div>
     );
   }
 }

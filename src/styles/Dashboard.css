@@ -1,0 +1,134 @@
+.dashboard {
+  display: flex;
+  min-height: calc(100vh - 175px);
+}
+
+@media screen and (max-width: 860px) {
+  .dashboard {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .accountForms form {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .accountForms form label input {
+    margin: 10px 0;
+  }
+
+  .accountForms form button {
+    margin: 20px auto;
+    width: 100%;
+    max-width: 2000px;
+  }
+}
+
+.dashboardHeader {
+  display: block;
+  background-color: transparent;
+  color: var(--off-black);
+  border: none;
+  font-size: 1.5rem;
+  padding: 0;
+  float: none;
+  margin-left: 0;
+}
+
+.dashboardBody {
+  padding: 50px;
+  flex: 1;
+}
+
+.dashboardBody p {
+  padding: 15px 0;
+  margin: 0;
+}
+
+.dashboard .activeView {
+  font-weight: bolder;
+  color: gray;
+}
+
+.accountMenu {
+  padding: 30px;
+  background-color: #dadada;
+}
+
+.accountMenu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.accountMenu ul li {
+  margin-bottom: 15px;
+}
+
+.accountMenu .activeView {
+  color: lightgray;
+}
+
+.linkButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  font-family: 'Comfortaa', cursive;
+}
+
+.linkButton:hover,
+.linkButton:focus {
+  text-decoration: underline;
+}
+
+.accountSettings {
+  display: flex;
+  flex-direction: column;
+}
+
+.accountForms {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.accountForms form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0;
+  padding-right: 30px;
+}
+
+.accountForms form input {
+  display: block;
+  margin: 10px;
+  padding-left: 20px;
+  min-width: 200px;
+  max-width: 400px;
+  background-color: lightgray;
+  outline: none;
+  font-size: 1rem;
+  font-family: 'Comfortaa', cursive;
+}
+
+.accountForms form button {
+  font-size: 18px;
+  margin: 20px 0;
+  max-width: 200px;
+  font-family: 'Comfortaa', cursive;
+  background-color: darkgray;
+  outline: none;
+}
+
+.accountForms form button:active {
+  outline: 1px solid #282c34;;
+  outline-offset: -4px;
+}
